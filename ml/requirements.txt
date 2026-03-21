@@ -1,0 +1,8 @@
+lightgbm
+scikit-learn
+numpy
+pandas
+textstat
+vaderSentiment
+matplotlib
+seaborn

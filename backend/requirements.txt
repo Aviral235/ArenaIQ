@@ -1,0 +1,19 @@
+# ArenaIQ Backend — compatible with Python 3.10-3.13
+# No version pins = pip picks the right wheel automatically
+fastapi
+uvicorn[standard]
+sqlalchemy
+pydantic
+pydantic-settings
+python-dotenv
+python-multipart
+httpx
+lightgbm
+scikit-learn
+numpy
+pandas
+textstat
+vaderSentiment
+google-generativeai
+openai
+groq
