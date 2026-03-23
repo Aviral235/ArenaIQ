@@ -37,7 +37,7 @@ body {
   position: absolute;
   border-radius: 50%;
   filter: blur(120px);
-  opacity: 0.35;
+  opacity: 0.4;
   animation: blob-float 20s ease-in-out infinite;
 }
 
@@ -682,4 +682,4 @@ body {
   .arena-results-grid { grid-template-columns: 1fr; }
   .arena-vote-buttons { flex-direction: column; }
 }
-
+
