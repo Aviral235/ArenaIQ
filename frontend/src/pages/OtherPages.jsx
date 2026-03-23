@@ -12,11 +12,8 @@ const useWindowWidth = () => {
   return w
 }
 
-/* ─── Shared Glass PageHeader ─── */
-function PageHeader({ tag, tagColor, title, subtitle, isMobile, isTablet }) {
+function PageHeader({ tag, tagColor, title, subtitle }) {
   const tagRef = useRef(null), h1Ref = useRef(null), subRef = useRef(null), hdrRef = useRef(null)
-  const hdrPad = isMobile ? '40px 20px 28px' : isTablet ? '46px 32px 32px' : '52px 64px 36px'
-
   useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
@@ -28,10 +25,10 @@ function PageHeader({ tag, tagColor, title, subtitle, isMobile, isTablet }) {
   }, [])
 
   return (
-    <div ref={hdrRef} style={{ padding: hdrPad }}>
+    <div ref={hdrRef} className="page-header">
       <div ref={tagRef} className="section-label" style={{ color: tagColor, opacity: 0 }}>{tag}</div>
-      <h1 ref={h1Ref} style={{ fontFamily: "'Poppins',sans-serif", fontSize: 'clamp(2.5rem,5vw,3.5rem)', fontWeight: 800, lineHeight: '0.95', clipPath: 'inset(0 100% 0 0)' }}>{title}</h1>
-      {subtitle && <p ref={subRef} style={{ color: 'rgba(255,255,255,0.45)', marginTop: '12px', maxWidth: '600px', fontSize: '0.95rem', fontWeight: 300, opacity: 0 }}>{subtitle}</p>}
+      <h1 ref={h1Ref} className="page-heading">{title}</h1>
+      {subtitle && <p ref={subRef} className="page-subtitle" style={{ maxWidth: '600px' }}>{subtitle}</p>}
     </div>
   )
 }
@@ -40,8 +37,6 @@ function PageHeader({ tag, tagColor, title, subtitle, isMobile, isTablet }) {
 // VOTE
 // ══════════════════════════════════════════════════════════════════════════════
 export function Vote() {
-  const width = useWindowWidth()
-  const isMobile = width < 480, isTablet = width < 768
 
   const [prompt, setPrompt] = useState('')
   const [modelA, setModelA] = useState('gemini-2.5-flash')
@@ -67,26 +62,22 @@ export function Vote() {
   const gen = async () => { if (!prompt.trim()) return; setLoading(true); setBattle(null); setVoted(null); try { const r = await runBattle(prompt, modelA, modelB); setBattle(r.data) } finally { setLoading(false) } }
   const vote = async (winner) => { if (!battle || voted) return; await submitHumanVote({ battle_id: battle.battle_id, prompt, response_a: battle.response_a, response_b: battle.response_b, winner, model_a: modelA, model_b: modelB }); setVoted(winner); setCount(c => c + 1) }
 
-  const bodyPad = isMobile ? '24px 20px' : isTablet ? '30px 32px' : '36px 64px'
-  const gridCols = isMobile ? '1fr' : '1fr 1fr'
-
   return (
-    <div ref={pageRef} style={{ paddingTop: '30px', position: 'relative', zIndex: 1 }}>
+    <div ref={pageRef} className="page-container">
       <PageHeader tag="Original Data Collection" tagColor="#e84393" title={<>🗳️ <span className="gradient-text">VOTE</span> MODE</>}
-        subtitle={<>Vote on real LLM responses — your votes generate original research data.{count > 0 && <span style={{ color: '#00cec9', marginLeft: '12px' }}>✓ {count} votes this session</span>}</>}
-        isMobile={isMobile} isTablet={isTablet} />
-      <div ref={formRef} style={{ padding: bodyPad }}>
-        <div style={{ display: 'grid', gridTemplateColumns: gridCols, gap: '16px', marginBottom: '16px' }}>
-          <div><label style={{ fontSize: '0.72rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', fontFamily: "'JetBrains Mono',monospace", marginBottom: '8px', display: 'block' }}>Model A</label><select className="glass-select" value={modelA} onChange={e => { if (e.target.value !== modelB) setModelA(e.target.value) }}>{models.map(m => <option key={m.id} value={m.id} disabled={m.id === modelB}>{m.display}</option>)}</select></div>
-          <div><label style={{ fontSize: '0.72rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', fontFamily: "'JetBrains Mono',monospace", marginBottom: '8px', display: 'block' }}>Model B</label><select className="glass-select" value={modelB} onChange={e => { if (e.target.value !== modelA) setModelB(e.target.value) }}>{models.map(m => <option key={m.id} value={m.id} disabled={m.id === modelA}>{m.display}</option>)}</select></div>
+        subtitle={<>Vote on real LLM responses — your votes generate original research data.{count > 0 && <span style={{ color: '#00cec9', marginLeft: '12px' }}>✓ {count} votes this session</span>}</>} />
+      <div ref={formRef} className="page-body">
+        <div className="grid-2" style={{ marginBottom: '16px' }}>
+          <div><label className="form-label">Model A</label><select className="glass-select" value={modelA} onChange={e => { if (e.target.value !== modelB) setModelA(e.target.value) }}>{models.map(m => <option key={m.id} value={m.id} disabled={m.id === modelB}>{m.display}</option>)}</select></div>
+          <div><label className="form-label">Model B</label><select className="glass-select" value={modelB} onChange={e => { if (e.target.value !== modelA) setModelB(e.target.value) }}>{models.map(m => <option key={m.id} value={m.id} disabled={m.id === modelA}>{m.display}</option>)}</select></div>
         </div>
         <textarea className="glass-textarea" style={{ height: '80px', marginBottom: '14px' }} value={prompt} onChange={e => setPrompt(e.target.value)} placeholder="Enter a prompt to generate responses to vote on..." />
-        <button className="glass-btn glass-btn-primary" onClick={gen} disabled={loading} style={{ marginBottom: '28px', width: isMobile ? '100%' : undefined }}>{loading ? '⏳ Generating...' : '🎲 Generate Battle'}</button>
+        <button className="glass-btn glass-btn-primary w-full sm:w-auto" onClick={gen} disabled={loading} style={{ marginBottom: '28px' }}>{loading ? '⏳ Generating...' : '🎲 Generate Battle'}</button>
 
         <AnimatePresence mode="wait">
           {battle && (
             <motion.div key="vote-results" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-              <div style={{ display: 'grid', gridTemplateColumns: gridCols, gap: '16px', marginBottom: '16px' }}>
+              <div className="grid-2" style={{ marginBottom: '16px' }}>
                 {['a', 'b'].map((side, idx) => (
                   <motion.div key={side} initial={{ opacity: 0, y: 25 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: idx * 0.15 }}
                     whileHover={{ y: -4, boxShadow: '0 16px 48px rgba(108,92,231,0.12)' }}
@@ -97,7 +88,7 @@ export function Vote() {
                 ))}
               </div>
               {!voted ? (
-                <div style={{ display: 'flex', gap: '10px', flexDirection: isMobile ? 'column' : 'row' }}>
+                <div className="arena-vote-buttons">
                   {[['a', '⬅ Model A', '#6c5ce7'], ['tie', '🤝 Tie', 'rgba(255,255,255,0.3)'], ['b', 'Model B ➡', '#e84393']].map(([v, l, c], i) => (
                     <motion.button key={v} onClick={() => vote(v)} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 + i * 0.1 }}
                       className="glass-btn" style={{ flex: 1, borderColor: `${c}40` }}
@@ -124,8 +115,6 @@ export function Vote() {
 // BIAS LAB
 // ══════════════════════════════════════════════════════════════════════════════
 export function Bias() {
-  const width = useWindowWidth()
-  const isMobile = width < 480, isTablet = width < 768
 
   const pageRef = useRef(null), gridRef = useRef(null), cardsRef = useRef([]), barsRef = useRef([])
 
@@ -148,15 +137,12 @@ export function Bias() {
     return () => ctx.revert()
   }, [])
 
-  const bodyPad = isMobile ? '24px 20px' : isTablet ? '30px 32px' : '36px 64px'
-  const gridCols = isMobile ? '1fr' : '1fr 1fr'
-
   return (
-    <div ref={pageRef} style={{ paddingTop: '30px', position: 'relative', zIndex: 1 }}>
+    <div ref={pageRef} className="page-container">
       <PageHeader tag="Research Findings" tagColor="#fd79a8" title={<>🔬 <span className="gradient-text">BIAS DETECTION</span> LAB</>}
-        subtitle="Original research findings from analyzing 55,000 human preference votes from Chatbot Arena." isMobile={isMobile} isTablet={isTablet} />
-      <div style={{ padding: bodyPad }}>
-        <div ref={gridRef} style={{ display: 'grid', gridTemplateColumns: gridCols, gap: '20px' }}>
+        subtitle="Original research findings from analyzing 55,000 human preference votes from Chatbot Arena." />
+      <div className="page-body">
+        <div ref={gridRef} className="grid-2" style={{ gap: '20px' }}>
           {BIASES.map((b, i) => (
             <motion.div key={b.name} ref={el => (cardsRef.current[i] = el)}
               whileHover={{ y: -6, scale: 1.01, boxShadow: `0 16px 48px ${b.color}20` }}
@@ -188,8 +174,6 @@ export function Bias() {
 // OPTIMIZER
 // ══════════════════════════════════════════════════════════════════════════════
 export function Optimizer() {
-  const width = useWindowWidth()
-  const isMobile = width < 480, isTablet = width < 768
 
   const [prompt, setPrompt] = useState('')
   const [response, setResponse] = useState('')
@@ -213,26 +197,23 @@ export function Optimizer() {
 
   const handle = async () => { if (!prompt.trim() || !response.trim()) return; setLoading(true); setResult(null); try { const r = await optimizeResponse(response, prompt, model); setResult(r.data) } finally { setLoading(false) } }
 
-  const bodyPad = isMobile ? '24px 20px' : isTablet ? '30px 32px' : '36px 64px'
-  const mainCols = (isMobile || isTablet) ? '1fr' : '1fr 1fr'
-
   return (
-    <div ref={pageRef} style={{ paddingTop: '30px', position: 'relative', zIndex: 1 }}>
+    <div ref={pageRef} className="page-container">
       <PageHeader tag="Ethical AI" tagColor="#fdcb6e" title={<>⚡ <span className="gradient-text">ADVERSARIAL</span> OPTIMIZER</>}
-        subtitle="Paste any AI response and we'll rewrite it to maximize its predicted win probability — by exploiting the biases we discovered." isMobile={isMobile} isTablet={isTablet} />
-      <div style={{ padding: bodyPad }}>
-        <div style={{ display: 'grid', gridTemplateColumns: mainCols, gap: '32px' }}>
+        subtitle="Paste any AI response and we'll rewrite it to maximize its predicted win probability — by exploiting the biases we discovered." />
+      <div className="page-body">
+        <div className="opt-grid">
           <div ref={leftRef} style={{ opacity: 0 }}>
-            <div style={{ marginBottom: '14px' }}><label style={{ fontSize: '0.72rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', fontFamily: "'JetBrains Mono',monospace", marginBottom: '8px', display: 'block' }}>Original Prompt</label><textarea className="glass-textarea" style={{ height: '80px' }} value={prompt} onChange={e => setPrompt(e.target.value)} placeholder="The original question asked to the AI..." /></div>
-            <div style={{ marginBottom: '14px' }}><label style={{ fontSize: '0.72rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', fontFamily: "'JetBrains Mono',monospace", marginBottom: '8px', display: 'block' }}>Response to Optimize</label><textarea className="glass-textarea" style={{ height: '150px' }} value={response} onChange={e => setResponse(e.target.value)} placeholder="Paste any AI response here — we'll make it win..." /></div>
-            <div style={{ marginBottom: '18px' }}><label style={{ fontSize: '0.72rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', fontFamily: "'JetBrains Mono',monospace", marginBottom: '8px', display: 'block' }}>Optimizer Model</label><select className="glass-select" value={model} onChange={e => setModel(e.target.value)}>{models.map(m => <option key={m.id} value={m.id}>{m.display}</option>)}</select></div>
+            <div style={{ marginBottom: '14px' }}><label className="form-label">Original Prompt</label><textarea className="glass-textarea" style={{ height: '80px' }} value={prompt} onChange={e => setPrompt(e.target.value)} placeholder="The original question asked to the AI..." /></div>
+            <div style={{ marginBottom: '14px' }}><label className="form-label">Response to Optimize</label><textarea className="glass-textarea" style={{ height: '150px' }} value={response} onChange={e => setResponse(e.target.value)} placeholder="Paste any AI response here — we'll make it win..." /></div>
+            <div style={{ marginBottom: '18px' }}><label className="form-label">Optimizer Model</label><select className="glass-select" value={model} onChange={e => setModel(e.target.value)}>{models.map(m => <option key={m.id} value={m.id}>{m.display}</option>)}</select></div>
             <button className="glass-btn glass-btn-primary" onClick={handle} disabled={loading} style={{ width: '100%' }}>{loading ? '⏳ Optimizing...' : '⚡ Optimize to Win'}</button>
           </div>
           <div ref={rightRef} style={{ opacity: 0 }}>
             <AnimatePresence mode="wait">
               {result ? (
                 <motion.div key="opt-result" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr 1fr', gap: '12px', marginBottom: '18px' }}>
+                  <div className="opt-results-grid">
                     {[{ l: 'Original', v: `${(result.original_win_prob * 100).toFixed(0)}%`, c: '#e84393' }, { l: 'Optimized', v: `${(result.optimized_win_prob * 100).toFixed(0)}%`, c: '#00cec9' }, { l: 'Improvement', v: `+${result.improvement_pct}%`, c: '#fdcb6e' }].map((m, i) => (
                       <motion.div key={m.l} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 + i * 0.1 }}
                         whileHover={{ y: -3 }}
@@ -274,8 +255,6 @@ export function Optimizer() {
 // LEADERBOARD
 // ══════════════════════════════════════════════════════════════════════════════
 export function Leaderboard() {
-  const width = useWindowWidth()
-  const isMobile = width < 480, isTablet = width < 768
 
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
@@ -302,13 +281,11 @@ export function Leaderboard() {
   }, [loading])
 
   const medalBg = rank => rank === 1 ? 'linear-gradient(135deg, #fdcb6e, #ffeaa7)' : rank === 2 ? 'linear-gradient(135deg, #b2bec3, #dfe6e9)' : rank === 3 ? 'linear-gradient(135deg, #e17055, #fab1a0)' : 'rgba(255,255,255,0.08)'
-  const bodyPad = isMobile ? '24px 20px' : isTablet ? '30px 32px' : '36px 64px'
-
   return (
-    <div ref={pageRef} style={{ paddingTop: '30px', position: 'relative', zIndex: 1 }}>
+    <div ref={pageRef} className="page-container">
       <PageHeader tag="ELO Rankings" tagColor="#fdcb6e" title={<>🏆 <span className="gradient-text">MODEL</span> LEADERBOARD</>}
-        subtitle="Chess-style ELO ratings based on actual battle outcomes. Updated in real time after every human vote." isMobile={isMobile} isTablet={isTablet} />
-      <div style={{ padding: bodyPad }}>
+        subtitle="Chess-style ELO ratings based on actual battle outcomes. Updated in real time after every human vote." />
+      <div className="page-body">
         <AnimatePresence mode="wait">
           {loading ? (
             <motion.div key="lb-load" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}

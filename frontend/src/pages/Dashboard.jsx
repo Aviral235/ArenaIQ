@@ -7,12 +7,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const useWindowWidth = () => {
-  const [w, setW] = useState(window.innerWidth)
-  useEffect(() => { const h = () => setW(window.innerWidth); window.addEventListener('resize', h); return () => window.removeEventListener('resize', h) }, [])
-  return w
-}
-
 // Custom Glass Tooltip for high contrast
 const CustomGlassTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
@@ -43,9 +37,6 @@ const CustomGlassTooltip = ({ active, payload, label }) => {
 }
 
 export default function Dashboard() {
-  const width = useWindowWidth()
-  const isMobile = width < 480, isTablet = width < 768
-
   const [stats, setStats] = useState(null)
   const [history, setHistory] = useState([])
   const [loading, setLoading] = useState(true)
@@ -73,11 +64,6 @@ export default function Dashboard() {
     }, pageRef)
     return () => ctx.revert()
   }, [loading])
-
-  const hdrPad = isMobile ? '40px 20px 28px' : isTablet ? '46px 32px 32px' : '52px 64px 36px'
-  const bodyPad = isMobile ? '24px 20px' : isTablet ? '30px 32px' : '36px 64px'
-  const metCols = isMobile ? '1fr' : isTablet ? 'repeat(2,1fr)' : 'repeat(4,1fr)'
-  const chartCols = isMobile ? '1fr' : '1fr 1fr'
 
   if (loading) return (
     <AnimatePresence>
@@ -113,17 +99,17 @@ export default function Dashboard() {
   ] : []
 
   return (
-    <div ref={pageRef} style={{ paddingTop: '30px', position: 'relative', zIndex: 1 }}>
-      <div style={{ padding: hdrPad }}>
+    <div ref={pageRef} className="page-container">
+      <div className="page-header">
         <div ref={tagRef} className="section-label" style={{ color: '#6c5ce7', opacity: 0 }}>Analytics</div>
-        <h1 ref={h1Ref} style={{ fontFamily: "'Poppins',sans-serif", fontSize: 'clamp(2.5rem,5vw,3.5rem)', fontWeight: 800, lineHeight: '0.95', clipPath: 'inset(0 100% 0 0)' }}>
+        <h1 ref={h1Ref} className="page-heading">
           📊 <span className="gradient-text">ANALYTICS</span> DASHBOARD
         </h1>
       </div>
 
-      <div style={{ padding: bodyPad }}>
+      <div className="page-body">
         {/* Metric cards */}
-        <div ref={metricsRef} style={{ display: 'grid', gridTemplateColumns: metCols, gap: '16px', marginBottom: '28px' }}>
+        <div ref={metricsRef} className="dashboard-metrics-grid">
           {metricCards.map(m => (
             <motion.div key={m.label} whileHover={{ y: -4, boxShadow: `0 16px 48px ${m.color}20` }} transition={{ duration: 0.25 }}
               className="glass-card" style={{ opacity: 0, position: 'relative', overflow: 'hidden' }}>
@@ -135,7 +121,7 @@ export default function Dashboard() {
         </div>
 
         {/* Charts */}
-        <div ref={chartsRef} style={{ display: 'grid', gridTemplateColumns: chartCols, gap: '20px', marginBottom: '24px' }}>
+        <div ref={chartsRef} className="dashboard-charts-grid">
           <motion.div whileHover={{ y: -3 }} transition={{ duration: 0.25 }} className="glass-card" style={{ opacity: 0 }}>
             <h3 style={{ fontFamily: "'Poppins',sans-serif", fontSize: '1.1rem', fontWeight: 600, marginBottom: '4px' }}>Win Distribution</h3>
             <p style={{ fontSize: '0.76rem', color: 'rgba(255,255,255,0.4)', marginBottom: '18px' }}>Prediction split across all battles</p>

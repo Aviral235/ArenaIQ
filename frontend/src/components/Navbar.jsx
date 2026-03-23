@@ -14,9 +14,6 @@ const LINKS = [
 export default function Navbar() {
   const { pathname } = useLocation()
   
-  // Desktop Hover State (kept from original)
-  const [hovered, setHovered] = useState(null)
-  
   // Mobile & Scroll States
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -60,47 +57,21 @@ export default function Navbar() {
             : 'py-[18px] px-6 md:px-12 bg-[rgba(255,255,255,0.04)] backdrop-blur-[24px] border-b border-[rgba(255,255,255,0.08)] shadow-[0_4px_30px_rgba(0,0,0,0.3)]'
         }`}
       >
-        <Link to="/" style={{
-          marginLeft: '20px',
-          fontFamily: "'Poppins',sans-serif", fontSize: '1.8rem', fontWeight: 700,
-          textDecoration: 'none', letterSpacing: '0.02em',
-          background: 'linear-gradient(135deg, #6c5ce7, #00cec9)',
-          WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-          backgroundClip: 'text',
-        }}>
+        <Link to="/" className="navbar-logo">
           ArenaIQ
         </Link>
         
-        {/* DESKTOP VIEW: untouched navigation loop logic, just increased scaling properties */}
-        <ul className="hidden lg:flex" style={{ gap: '8px', listStyle: 'none', flexWrap: 'wrap' }}>
+        {/* DESKTOP VIEW: Uses external CSS classes from glass.css */}
+        <ul className="hidden lg:flex desktop-nav-list">
           {LINKS.map(l => {
             const active = pathname === l.to
-            const isHov = hovered === l.to
             return (
               <li key={l.to}>
-                <Link to={l.to}
-                  onMouseEnter={() => setHovered(l.to)}
-                  onMouseLeave={() => setHovered(null)}
-                  style={{
-                    position: 'relative',
-                    padding: '10px 18px', display: 'flex', alignItems: 'center', gap: '8px',
-                    fontFamily: "'Inter',sans-serif",
-                    fontSize: '0.9rem', fontWeight: 500,
-                    letterSpacing: '0.03em', textDecoration: 'none',
-                    color: active ? '#fff' : (isHov ? '#d1d5e0' : 'rgba(255,255,255,0.55)'),
-                    background: active
-                      ? 'linear-gradient(135deg, rgba(108,92,231,0.25), rgba(0,206,201,0.15))'
-                      : (isHov ? 'rgba(255,255,255,0.06)' : 'transparent'),
-                    border: active
-                      ? '1px solid rgba(108,92,231,0.3)'
-                      : '1px solid transparent',
-                    borderRadius: '12px',
-                    backdropFilter: active ? 'blur(8px)' : undefined,
-                    WebkitBackdropFilter: active ? 'blur(8px)' : undefined,
-                    transition: 'all 0.25s ease',
-                    boxShadow: active ? '0 0 16px rgba(108,92,231,0.15)' : undefined,
-                  }}>
-                  {l.icon && <span style={{ fontSize: '1rem' }}>{l.icon}</span>}
+                <Link 
+                  to={l.to}
+                  className={`desktop-nav-link ${active ? 'active' : ''}`}
+                >
+                  {l.icon && <span className="nav-icon">{l.icon}</span>}
                   {l.label}
                 </Link>
               </li>
