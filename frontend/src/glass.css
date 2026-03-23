@@ -1,0 +1,329 @@
+/* ═══════════════════════════════════════════════════════════════
+   ArenaIQ — Glassmorphism Design System
+   ═══════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ─── Base Reset ─── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #060b18;
+  color: #e4e8f1;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+#root { min-height: 100vh; position: relative; }
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0a0f1f; }
+::-webkit-scrollbar-thumb { background: rgba(108,92,231,0.4); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(108,92,231,0.6); }
+
+/* ─── Animated Background Blobs ─── */
+.blob-container {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.35;
+  animation: blob-float 20s ease-in-out infinite;
+}
+
+.blob-1 {
+  width: 600px; height: 600px;
+  background: #6c5ce7;
+  top: -10%; left: -5%;
+  animation-delay: 0s;
+}
+.blob-2 {
+  width: 500px; height: 500px;
+  background: #00cec9;
+  top: 40%; right: -8%;
+  animation-delay: -7s;
+  animation-duration: 25s;
+}
+.blob-3 {
+  width: 450px; height: 450px;
+  background: #e84393;
+  bottom: -10%; left: 30%;
+  animation-delay: -14s;
+  animation-duration: 22s;
+}
+
+@keyframes blob-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(60px, -40px) scale(1.1); }
+  50% { transform: translate(-30px, 60px) scale(0.95); }
+  75% { transform: translate(40px, 30px) scale(1.05); }
+}
+
+/* ─── Glass Utilities ─── */
+.glass {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.3),
+    inset 0 1px 1px rgba(255,255,255,0.08);
+}
+
+.glass-strong {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 16px;
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.35),
+    inset 0 1px 1px rgba(255,255,255,0.1);
+}
+
+.glass-subtle {
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+/* ─── Glass Card with Hover ─── */
+.glass-card {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.3),
+    inset 0 1px 1px rgba(255,255,255,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow:
+    0 16px 48px rgba(108,92,231,0.15),
+    0 8px 32px rgba(0,0,0,0.35),
+    inset 0 1px 1px rgba(255,255,255,0.12);
+  border-color: rgba(108,92,231,0.3);
+}
+
+/* ─── Glass Button ─── */
+.glass-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 12px;
+  color: #e4e8f1;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+.glass-btn:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(108,92,231,0.4);
+  box-shadow:
+    0 4px 16px rgba(0,0,0,0.2),
+    0 0 20px rgba(108,92,231,0.15);
+  transform: translateY(-2px);
+}
+
+.glass-btn-primary {
+  background: linear-gradient(135deg, rgba(108,92,231,0.4), rgba(0,206,201,0.3));
+  border-color: rgba(108,92,231,0.3);
+}
+
+.glass-btn-primary:hover {
+  background: linear-gradient(135deg, rgba(108,92,231,0.55), rgba(0,206,201,0.4));
+  border-color: rgba(108,92,231,0.5);
+  box-shadow:
+    0 4px 20px rgba(108,92,231,0.25),
+    0 0 30px rgba(108,92,231,0.12);
+}
+
+/* ─── Glass Input ─── */
+.glass-input, .glass-select, .glass-textarea {
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  color: #e4e8f1;
+  padding: 12px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.glass-input:focus, .glass-select:focus, .glass-textarea:focus {
+  border-color: rgba(108,92,231,0.5);
+  box-shadow:
+    inset 0 2px 8px rgba(0,0,0,0.2),
+    0 0 16px rgba(108,92,231,0.12);
+}
+
+.glass-textarea { resize: none; line-height: 1.7; }
+.glass-select { cursor: pointer; }
+.glass-select option { background: #0a0f1f; color: #e4e8f1; }
+
+/* ─── Gradient Text ─── */
+.gradient-text {
+  background: linear-gradient(135deg, #6c5ce7, #00cec9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-warm {
+  background: linear-gradient(135deg, #e84393, #fd79a8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Glow Accent ─── */
+.glow-purple { box-shadow: 0 0 20px rgba(108,92,231,0.3); }
+.glow-cyan   { box-shadow: 0 0 20px rgba(0,206,201,0.3); }
+.glow-pink   { box-shadow: 0 0 20px rgba(232,67,147,0.3); }
+
+/* ─── Tag / Badge ─── */
+.glass-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* ─── Section Label ─── */
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.section-label::before {
+  content: '';
+  width: 24px;
+  height: 2px;
+  border-radius: 1px;
+  background: currentColor;
+}
+
+/* ─── Cursor Ripple Effect ─── */
+.cursor-ripple {
+  position: fixed;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(108,92,231,0.25) 0%, rgba(0,206,201,0.1) 40%, transparent 70%);
+  transform: translate(-50%, -50%);
+  animation: ripple-expand 0.6s ease-out forwards;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+@keyframes ripple-expand {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0.6;
+  }
+  100% {
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+  }
+}
+
+/* ─── Enhanced hover interactions ─── */
+.glass-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.04) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.glass-card:hover::after {
+  opacity: 1;
+}
+
+.glass-card:hover {
+  filter: brightness(1.05);
+}
+
+.glass-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-btn:hover {
+  filter: brightness(1.08);
+}
+
+.glass-btn:active {
+  transform: scale(0.97) !important;
+  transition: transform 0.1s ease;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .blob-1 { width: 350px; height: 350px; }
+  .blob-2 { width: 300px; height: 300px; }
+  .blob-3 { width: 250px; height: 250px; }
+}
+
+@media (max-width: 480px) {
+  .blob { filter: blur(80px); opacity: 0.25; }
+}
