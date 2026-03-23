@@ -71,7 +71,7 @@ export function Vote() {
   const gridCols = isMobile ? '1fr' : '1fr 1fr'
 
   return (
-    <div ref={pageRef} style={{ paddingTop: '80px', position: 'relative', zIndex: 1 }}>
+    <div ref={pageRef} style={{ paddingTop: '30px', position: 'relative', zIndex: 1 }}>
       <PageHeader tag="Original Data Collection" tagColor="#e84393" title={<>🗳️ <span className="gradient-text">VOTE</span> MODE</>}
         subtitle={<>Vote on real LLM responses — your votes generate original research data.{count > 0 && <span style={{ color: '#00cec9', marginLeft: '12px' }}>✓ {count} votes this session</span>}</>}
         isMobile={isMobile} isTablet={isTablet} />
@@ -152,7 +152,7 @@ export function Bias() {
   const gridCols = isMobile ? '1fr' : '1fr 1fr'
 
   return (
-    <div ref={pageRef} style={{ paddingTop: '80px', position: 'relative', zIndex: 1 }}>
+    <div ref={pageRef} style={{ paddingTop: '30px', position: 'relative', zIndex: 1 }}>
       <PageHeader tag="Research Findings" tagColor="#fd79a8" title={<>🔬 <span className="gradient-text">BIAS DETECTION</span> LAB</>}
         subtitle="Original research findings from analyzing 55,000 human preference votes from Chatbot Arena." isMobile={isMobile} isTablet={isTablet} />
       <div style={{ padding: bodyPad }}>
@@ -217,7 +217,7 @@ export function Optimizer() {
   const mainCols = (isMobile || isTablet) ? '1fr' : '1fr 1fr'
 
   return (
-    <div ref={pageRef} style={{ paddingTop: '80px', position: 'relative', zIndex: 1 }}>
+    <div ref={pageRef} style={{ paddingTop: '30px', position: 'relative', zIndex: 1 }}>
       <PageHeader tag="Ethical AI" tagColor="#fdcb6e" title={<>⚡ <span className="gradient-text">ADVERSARIAL</span> OPTIMIZER</>}
         subtitle="Paste any AI response and we'll rewrite it to maximize its predicted win probability — by exploiting the biases we discovered." isMobile={isMobile} isTablet={isTablet} />
       <div style={{ padding: bodyPad }}>
@@ -305,7 +305,7 @@ export function Leaderboard() {
   const bodyPad = isMobile ? '24px 20px' : isTablet ? '30px 32px' : '36px 64px'
 
   return (
-    <div ref={pageRef} style={{ paddingTop: '80px', position: 'relative', zIndex: 1 }}>
+    <div ref={pageRef} style={{ paddingTop: '30px', position: 'relative', zIndex: 1 }}>
       <PageHeader tag="ELO Rankings" tagColor="#fdcb6e" title={<>🏆 <span className="gradient-text">MODEL</span> LEADERBOARD</>}
         subtitle="Chess-style ELO ratings based on actual battle outcomes. Updated in real time after every human vote." isMobile={isMobile} isTablet={isTablet} />
       <div style={{ padding: bodyPad }}>

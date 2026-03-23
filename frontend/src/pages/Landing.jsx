@@ -9,8 +9,8 @@ gsap.registerPlugin(ScrollTrigger)
 /* ─── data ─── */
 const STATS = [
   { num: '55K', label: 'Training Battles', sub: 'Real human votes from Chatbot Arena', end: 55, suffix: 'K' },
-  { num: '6',   label: 'Platform Modules', sub: 'Arena · Vote · Analyze · Bias · Optimize · Rank', end: 6, suffix: '' },
-  { num: '3',   label: 'Prediction Classes', sub: 'Model A wins · Model B wins · Tie', end: 3, suffix: '' },
+  { num: '6', label: 'Platform Modules', sub: 'Arena · Vote · Analyze · Bias · Optimize · Rank', end: 6, suffix: '' },
+  { num: '3', label: 'Prediction Classes', sub: 'Model A wins · Model B wins · Tie', end: 3, suffix: '' },
   { num: '9.5', label: 'Impact Score', sub: 'Technical depth × originality × live demo', end: 9.5, suffix: '' },
 ]
 
@@ -90,7 +90,7 @@ export default function Landing() {
   const ctaDir = isMobile ? 'column' : 'row'
 
   return (
-    <div ref={pageRef} style={{ paddingTop: '80px', position: 'relative', zIndex: 1 }}>
+    <div ref={pageRef} style={{ paddingTop: '30px', position: 'relative', zIndex: 1 }}>
       {/* ═══ HERO ═══ */}
       <section ref={heroRef} style={{
         minHeight: '90vh', display: 'flex', flexDirection: 'column',

@@ -82,7 +82,7 @@ export default function Dashboard() {
   if (loading) return (
     <AnimatePresence>
       <motion.div key="dash-load" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-        style={{ paddingTop: '80px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh', position: 'relative', zIndex: 1 }}>
+        style={{ paddingTop: '30px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh', position: 'relative', zIndex: 1 }}>
         <div className="glass" style={{ textAlign: 'center', padding: '48px 60px', borderRadius: '20px' }}>
           <div style={{ fontSize: '2rem', marginBottom: '12px' }}>📊</div>
           <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)' }}>Loading dashboard...</div>
@@ -113,7 +113,7 @@ export default function Dashboard() {
   ] : []
 
   return (
-    <div ref={pageRef} style={{ paddingTop: '80px', position: 'relative', zIndex: 1 }}>
+    <div ref={pageRef} style={{ paddingTop: '30px', position: 'relative', zIndex: 1 }}>
       <div style={{ padding: hdrPad }}>
         <div ref={tagRef} className="section-label" style={{ color: '#6c5ce7', opacity: 0 }}>Analytics</div>
         <h1 ref={h1Ref} style={{ fontFamily: "'Poppins',sans-serif", fontSize: 'clamp(2.5rem,5vw,3.5rem)', fontWeight: 800, lineHeight: '0.95', clipPath: 'inset(0 100% 0 0)' }}>

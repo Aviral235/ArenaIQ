@@ -70,7 +70,7 @@ export default function Arena() {
   const resCols = isMobile ? '1fr' : '1fr 1fr'
 
   return (
-    <div ref={pageRef} style={{ paddingTop: '80px', minHeight: '100vh', position: 'relative', zIndex: 1 }}>
+    <div ref={pageRef} style={{ paddingTop: '30px', minHeight: '100vh', position: 'relative', zIndex: 1 }}>
       {/* Header */}
       <div style={{ padding: hdrPad }}>
         <div ref={tagRef} className="section-label" style={{ color: '#6c5ce7', opacity: 0 }}>Live Arena</div>
