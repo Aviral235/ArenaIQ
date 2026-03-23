@@ -90,93 +90,79 @@ export default function Landing() {
   const ctaDir = isMobile ? 'column' : 'row'
 
   return (
-    <div ref={pageRef} style={{ paddingTop: '30px', position: 'relative', zIndex: 1 }}>
+    <div ref={pageRef} className="page-container">
       {/* ═══ HERO ═══ */}
-      <section ref={heroRef} style={{
-        minHeight: '90vh', display: 'flex', flexDirection: 'column',
-        justifyContent: 'center', padding: heroPad, position: 'relative', overflow: 'hidden',
-      }}>
-        <div style={{ maxWidth: '800px', position: 'relative', zIndex: 1 }}>
+      <section ref={heroRef} className="hero-section">
+        <div className="hero-content">
           {/* Label */}
           <div ref={labelRef} className="section-label" style={{ color: '#a29bfe', opacity: 0 }}>
             Human Preference Intelligence Platform
           </div>
 
           {/* Heading */}
-          <h1 style={{ fontFamily: "'Poppins',sans-serif", fontSize: 'clamp(4rem,9vw,8rem)', lineHeight: '0.95', fontWeight: 800, letterSpacing: '-0.02em' }}>
-            <span ref={whoRef} style={{ display: 'inline-block', opacity: 0, color: '#e4e8f1' }}>WHO</span><br />
-            <span ref={winsRef} className="gradient-text" style={{ display: 'inline-block', opacity: 0 }}>WINS</span><br />
-            <span ref={arenaRef} style={{ display: 'inline-block', WebkitTextStroke: '2px rgba(255,255,255,0.15)', color: 'transparent', opacity: 0 }}>THE ARENA</span>
+          <h1 className="hero-heading">
+            <span ref={whoRef} className="word-who">WHO</span><br />
+            <span ref={winsRef} className="gradient-text word-wins">WINS</span><br />
+            <span ref={arenaRef} className="word-arena">THE ARENA</span>
           </h1>
 
           {/* Paragraph */}
-          <p ref={paraRef} style={{
-            fontSize: '1.1rem', lineHeight: '1.85', color: 'rgba(255,255,255,0.55)',
-            marginTop: '28px', maxWidth: '520px', opacity: 0, fontWeight: 300,
-          }}>
+          <p ref={paraRef} className="hero-paragraph">
             A full-stack AI research platform that{' '}
-            <strong style={{ color: '#e4e8f1', fontWeight: 500 }}>predicts, explains, and measures</strong>{' '}
+            <strong>predicts, explains, and measures</strong>{' '}
             human preference in LLM responses — the same technology behind ChatGPT, Claude, and Gemini.
           </p>
 
           {/* CTA buttons */}
-          <div ref={ctaRef} style={{ display: 'flex', flexDirection: ctaDir, gap: '14px', marginTop: '36px' }}>
-            <Link to="/arena" className="glass-btn glass-btn-primary" style={{ opacity: 0, width: isMobile ? '100%' : undefined }}>
+          <div ref={ctaRef} className="hero-cta-group">
+            <Link to="/arena" className="glass-btn glass-btn-primary" style={{ opacity: 0 }}>
               ⚔️ Enter the Arena →
             </Link>
-            <Link to="/dashboard" className="glass-btn" style={{ opacity: 0, width: isMobile ? '100%' : undefined }}>
+            <Link to="/dashboard" className="glass-btn" style={{ opacity: 0 }}>
               View Dashboard
             </Link>
           </div>
         </div>
 
         {/* Stats */}
-        <div ref={statsRef} style={{
-          display: 'grid', gridTemplateColumns: statsCols,
-          gap: '16px', marginTop: '72px', maxWidth: '920px',
-        }}>
+        <div ref={statsRef} className="stats-grid">
           {STATS.map(s => (
-            <div key={s.label} className="glass-card" style={{ opacity: 0, padding: '24px', cursor: 'default' }}>
-              <div className="gradient-text" style={{ fontFamily: "'Poppins',sans-serif", fontSize: '2.6rem', fontWeight: 700, lineHeight: 1 }}>
+            <div key={s.label} className="glass-card stat-item">
+              <div className="gradient-text stat-number">
                 <AnimatedCounter end={s.end} suffix={s.suffix} started={countersStarted} />
               </div>
-              <div style={{ fontSize: '0.72rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.45)', fontFamily: "'JetBrains Mono',monospace", marginTop: '8px' }}>{s.label}</div>
-              <div style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.3)', marginTop: '4px' }}>{s.sub}</div>
+              <div className="stat-label">{s.label}</div>
+              <div className="stat-sub">{s.sub}</div>
             </div>
           ))}
         </div>
       </section>
 
       {/* ═══ FEATURES ═══ */}
-      <section ref={featuresRef} style={{ padding: sectPad }}>
+      <section ref={featuresRef} className="features-section">
         <div ref={featLabelRef} className="section-label" style={{ color: '#e84393', opacity: 0 }}>
           Platform Features
         </div>
-        <h2 ref={featHeadRef} style={{
-          fontFamily: "'Poppins',sans-serif", fontSize: 'clamp(2.5rem,5vw,4.5rem)', fontWeight: 800,
-          lineHeight: '0.95', letterSpacing: '-0.02em', marginBottom: '48px',
-          clipPath: 'inset(0 100% 0 0)',
-        }}>
+        <h2 ref={featHeadRef} className="features-heading">
           <span className="gradient-text">SIX POWERFUL</span> MODULES
         </h2>
 
-        <div ref={featGridRef} style={{ display: 'grid', gridTemplateColumns: featCols, gap: '16px' }}>
+        <div ref={featGridRef} className="features-grid">
           {FEATURES.map((f, i) => (
             <motion.div
               key={f.title}
               ref={el => (cardsRef.current[i] = el)}
               whileHover={{ y: -6, scale: 1.02, boxShadow: `0 16px 48px ${f.color}25, 0 0 20px ${f.color}15` }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="glass-card"
+              className="glass-card feature-card"
               style={{
                 gridColumn: (f.span > 1 && !isMobile && !isTablet) ? `span ${f.span}` : undefined,
-                cursor: 'default', opacity: 0,
                 borderTop: `2px solid ${f.color}40`,
               }}
             >
-              <div style={{ fontSize: '2.2rem', marginBottom: '14px' }}>{f.icon}</div>
-              <h3 style={{ fontFamily: "'Poppins',sans-serif", fontSize: '1.3rem', fontWeight: 600, marginBottom: '10px' }}>{f.title}</h3>
-              <p style={{ fontSize: '0.9rem', lineHeight: '1.75', color: 'rgba(255,255,255,0.5)' }}>{f.desc}</p>
+              <div className="feature-card-icon">{f.icon}</div>
+              <h3 className="feature-card-title">{f.title}</h3>
+              <p className="feature-card-desc">{f.desc}</p>
               <span className="glass-tag" style={{ marginTop: '16px', color: f.color, borderColor: `${f.color}30` }}>{f.tag}</span>
             </motion.div>
           ))}
@@ -189,14 +175,14 @@ export default function Landing() {
         initial={{ y: 40, opacity: 0 }}
         animate={rlhfInView ? { y: 0, opacity: 1 } : { y: 40, opacity: 0 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        style={{ padding: rlhfPad }}
+        className="rlhf-section"
       >
-        <div className="glass" style={{ maxWidth: '720px', padding: isMobile ? '32px 24px' : '48px 40px', borderRadius: '20px' }}>
+        <div className="glass rlhf-container">
           <motion.h2
             initial={{ x: -20, opacity: 0 }}
             animate={rlhfInView ? { x: 0, opacity: 1 } : { x: -20, opacity: 0 }}
             transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
-            style={{ fontFamily: "'Poppins',sans-serif", fontSize: '2.2rem', fontWeight: 700, marginBottom: '16px' }}
+            className="rlhf-title"
           >
             THE TECHNOLOGY BEHIND <span className="gradient-text">CHATGPT</span>
           </motion.h2>
@@ -204,7 +190,7 @@ export default function Landing() {
             initial={{ y: 15, opacity: 0 }}
             animate={rlhfInView ? { y: 0, opacity: 1 } : { y: 15, opacity: 0 }}
             transition={{ duration: 0.6, delay: 0.35, ease: 'easeOut' }}
-            style={{ fontSize: '1rem', lineHeight: '1.85', color: 'rgba(255,255,255,0.55)' }}
+            className="rlhf-desc"
           >
             Reinforcement Learning from Human Feedback (RLHF) is how OpenAI, Anthropic, and Google train
             their flagship models. It relies on{' '}
