@@ -100,7 +100,7 @@ export default function Arena() {
         {/* Loading */}
         <AnimatePresence mode="wait">
           {loading && (
-            <motion.div key="loading" {...fadeSlide} className="glass" style={{ textAlign: 'center', padding: '60px', borderRadius: '20px' }}>
+            <motion.div key="loading" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.3 }} className="glass" style={{ textAlign: 'center', padding: '60px', borderRadius: '20px' }}>
               <div style={{ fontSize: '2rem', marginBottom: '12px' }}>⏳</div>
               <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: '0.78rem', letterSpacing: '0.06em', color: 'rgba(255,255,255,0.6)' }}>Calling both models in parallel...</div>
               <div style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.3)', marginTop: '8px' }}>(Gemini free tier may take 5-10 seconds)</div>
